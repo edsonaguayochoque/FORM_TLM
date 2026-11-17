@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Formulario de recuento de alcancías TeleMaratón"
+    />
+    <title>Formulario de recuento de alcancías - TeleMaratón</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="sheet">
+      <header class="masthead">
+        <!--<div class="brand-placeholder" aria-label="Espacio para el logotipo del banco">
+        <span class="image-hint">LOGO<br>INSTITUCIÓN</span>
+      </div>-->
+        <div class="brand-placeholder">
+          <img src="img/banco_prodem.webp" alt="Banco Prodem" />
+        </div>
+        <div class="heading">
+          <h1>
+            FORMULARIO DE RECUENTO DE<br />ALCANCÍAS <span>TeleMaratón</span>
+          </h1>
+        </div>
+        <!--- <div
+          class="event-placeholder"
+          aria-label="Espacio para el logotipo de TeleMaratón"
+        >
+          <span class="heart">28</span>
+          <small>TeleMaratón</small>
+        </div>-->
+
+        <div class="event-placeholder">
+          <img src="img/corazon.webp" alt="TeleMaratón" />
+        </div>
+      </header>
+
+      <div class="serial">Nº <span>000001</span></div>
+
+      <form id="countForm">
+        <section class="general-fields">
+          <label class="field"
+            ><span>Institución:</span><input type="text" name="institucion"
+          /></label>
+          <label class="field"
+            ><span>Entregado por:</span><input type="text" name="entregadoPor"
+          /></label>
+          <label class="field"
+            ><span>Código de alcancía:</span><input type="text" name="codigo"
+          /></label>
+          <label class="field date-field"
+            ><span>Fecha:</span><input type="date" name="fecha"
+          /></label>
+          <label class="field"
+            ><span>Lugar de recuento:</span><input type="text" name="lugar"
+          /></label>
+        </section>
+
+        <div class="section-ribbon">1. DETALLE DEL RECUENTO</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>DENOMINACIÓN (Bs)</th>
+                <th>CANTIDAD DE PIEZAS</th>
+                <th>IMPORTE (Bs)</th>
+              </tr>
+            </thead>
+            <tbody id="denominationRows"></tbody>
+            <tfoot>
+              <tr>
+                <th>TOTAL Bs.</th>
+                <td id="totalPieces" class="total-number">0</td>
+                <td id="totalAmount" class="total-number">0,00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="summary-field">
+          <label for="amountWords">Importe total en literal:</label>
+          <input id="amountWords" type="text" name="importeLiteral" />
+        </div>
+        <div class="summary-field destination">
+          <label for="destination">Destino de los fondos:</label>
+          <input
+            id="destination"
+            type="text"
+            value="Recaudación de la telemaratón."
+          />
+        </div>
+        <div class="observations">
+          <label for="observations">Observaciones:</label>
+          <textarea id="observations" rows="2"></textarea>
+        </div>
+
+        <section class="signatures">
+          <div class="signature-box">
+            <h2>RESPONSABLE DEL RECUENTO 1</h2>
+            <div class="signature-space"></div>
+            <label>Firma: <input type="text" /></label>
+            <label>Nombre: <input type="text" /></label>
+          </div>
+          <div class="signature-box">
+            <h2>VALIDADOR DEL RECUENTO</h2>
+            <div class="signature-space"></div>
+            <label>Firma: <input type="text" /></label>
+            <label>Nombre: <input type="text" /></label>
+          </div>
+        </section>
+
+        <div class="actions no-print">
+          <button type="button" id="printBtn">Imprimir formulario</button>
+          <button type="reset" class="secondary">Limpiar formulario</button>
+        </div>
+      </form>
+      <footer class="footer-stripe"></footer>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
