@@ -78,6 +78,17 @@ const money = (value) =>
     maximumFractionDigits: 2,
   });
 
+// Colocar automáticamente la fecha actual
+
+const campoFecha = document.getElementById("date");
+
+if (campoFecha) {
+  const hoy = new Date();
+  hoy.setMinutes(hoy.getMinutes() - hoy.getTimezoneOffset());
+  campoFecha.value = hoy.toISOString().slice(0, 10);
+}
+
+
 // ==========================================
 // 3. GENERAR FILAS DE DENOMINACIONES
 // ==========================================
