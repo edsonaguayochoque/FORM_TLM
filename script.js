@@ -1,4 +1,4 @@
-const denominations = [0.10, 0.20, 0.50, 1, 2, 5, 10, 20, 50, 100, 200];
+/*const denominations = [0.10, 0.20, 0.50, 1, 2, 5, 10, 20, 50, 100, 200];
 const rowsContainer = document.getElementById('denominationRows');
 const totalPiecesElement = document.getElementById('totalPieces');
 const totalAmountElement = document.getElementById('totalAmount');
@@ -55,4 +55,215 @@ document.getElementById('countForm').addEventListener('reset', () => {
 });
 
 buildRows();
+calculateTotals();*/
+
+// ==========================================
+// 1. CONFIGURACIÓN DE DENOMINACIONES
+// ==========================================
+
+const denominations = [
+    0.10, 0.20, 0.50, 1, 2, 5, 10, 20, 50, 100, 200
+];
+
+// Referencias a elementos HTML
+const rowsContainer = document.getElementById('denominationRows');
+const totalPiecesElement = document.getElementById('totalPieces');
+const totalAmountElement = document.getElementById('totalAmount');
+
+
+// ==========================================
+// 2. FORMATO MONETARIO
+// ==========================================
+
+const money = value => value.toLocaleString('es-BO', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+
+
+// ==========================================
+// 3. GENERAR FILAS DE DENOMINACIONES
+// ==========================================
+
+function buildRows() {
+
+    denominations.forEach((denomination, index) => {
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${money(denomination)}</td>
+
+            <td>
+                <input
+                    class="quantity-input"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0"
+                    inputmode="numeric"
+                    aria-label="Cantidad de piezas para ${money(denomination)}"
+                    data-index="${index}"
+                >
+            </td>
+
+            <td class="amount-cell" data-amount="${index}">
+                0,00
+            </td>
+        `;
+
+        rowsContainer.appendChild(row);
+
+    });
+
+}
+
+
+// ==========================================
+// 4. ELIMINAR CERO INICIAL AL SELECCIONAR
+// ==========================================
+
+rowsContainer.addEventListener('focusin', function(event) {
+
+    const input = event.target;
+
+    // Verificar que sea un campo de cantidad
+    // y que todavía conserve su cero inicial
+
+    if (
+        input.classList.contains('quantity-input') &&
+        input.value === '0' &&
+        !input.dataset.touched
+    ) {
+
+        input.value = '';
+
+    }
+
+});
+
+document.addEventListener('focusout', function (event) {
+    const input = event.target;
+
+    if (input.classList.contains('quantity-input')) {
+        if (input.value.trim() === '') {
+            input.value = '0';
+            calculateTotals();
+        }
+    }
+});
+
+// ==========================================
+// 5. CALCULAR IMPORTES Y TOTALES
+// ==========================================
+
+function calculateTotals() {
+
+    let totalPieces = 0;
+    let totalAmount = 0;
+
+    denominations.forEach((denomination, index) => {
+
+        const input = document.querySelector(
+            `.quantity-input[data-index="${index}"]`
+        );
+
+        // Si está vacío, se considera cantidad cero
+        let quantity = Math.max(
+            0,
+            Math.floor(Number(input.value) || 0)
+        );
+
+        // Evitar cantidades negativas
+        if (input.value !== '' && Number(input.value) < 0) {
+            input.value = 0;
+        }
+
+        // Calcular importe por denominación
+        const amount = denomination * quantity;
+
+        // Acumular totales
+        totalPieces += quantity;
+        totalAmount += amount;
+
+        // Mostrar importe individual
+        document.querySelector(
+            `[data-amount="${index}"]`
+        ).textContent = money(amount);
+
+    });
+
+    // Mostrar total de piezas
+    totalPiecesElement.textContent =
+        totalPieces.toLocaleString('es-BO');
+
+    // Mostrar importe total
+    totalAmountElement.textContent = money(totalAmount);
+
+}
+
+
+// ==========================================
+// 6. DETECTAR CAMBIOS EN CANTIDAD DE PIEZAS
+// ==========================================
+
+rowsContainer.addEventListener('input', function(event) {
+
+    if (event.target.classList.contains('quantity-input')) {
+
+        // Marcar que el usuario ya modificó este campo
+        event.target.dataset.touched = 'true';
+
+        // Actualizar todos los cálculos
+        calculateTotals();
+
+    }
+
+});
+
+
+// ==========================================
+// 7. BOTÓN IMPRIMIR
+// ==========================================
+
+document.getElementById('printBtn').addEventListener('click', function() {
+
+    window.print();
+
+});
+
+
+// ==========================================
+// 8. BOTÓN LIMPIAR FORMULARIO
+// ==========================================
+
+document.getElementById('countForm').addEventListener('reset', function() {
+
+    // Esperar a que el formulario se reinicie
+    setTimeout(function() {
+
+        // Eliminar las marcas de campos modificados
+        document.querySelectorAll('.quantity-input').forEach(input => {
+
+            delete input.dataset.touched;
+
+        });
+
+        // Actualizar los importes a cero
+        calculateTotals();
+
+    }, 0);
+
+});
+
+
+// ==========================================
+// 9. INICIALIZAR APLICACIÓN
+// ==========================================
+
+// Generar las filas de denominaciones
+buildRows();
+
+// Inicializar todos los importes y totales en cero
 calculateTotals();
+
