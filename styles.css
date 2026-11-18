@@ -428,33 +428,104 @@ button:hover {
     flex-wrap: wrap;
   }
 }
+@page {
+  size: letter portrait;
+  margin: 8mm;
+}
+
 @media print {
-  @page {
-    size: A4;
-    margin: 10mm;
-  }
+  html,
   body {
-    padding: 0;
-    background: white;
-  }
-  .sheet {
     width: 100%;
-    max-width: none;
-    padding: 0;
-    border: 0;
-    box-shadow: none;
-  }
-  .actions,
-  .no-print {
-    display: none !important;
-  }
-  input,
-  textarea {
-    print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: var(--ink);
+    font-size: 9px !important;
     -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
-  .footer-stripe {
-    margin-left: 0;
-    margin-right: 0;
+
+  .sheet {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .actions,
+  .no-print { display: none !important; }
+
+  .masthead {
+    min-height: 68px !important;
+    grid-template-columns: 145px 1fr 85px !important;
+    gap: 8px !important;
+    padding: 6px 9px !important;
+    border-bottom-width: 3px !important;
+  }
+
+  .brand-placeholder img,
+  .event-placeholder img {
+    max-width: 125px !important;
+    max-height: 52px !important;
+    object-fit: contain;
+  }
+
+  .heading h1 { font-size: 18px !important; line-height: 1.12 !important; }
+  .serial { margin: 5px 4px 8px !important; font-size: 10px !important; }
+  .general-fields { gap: 4px !important; }
+  .field { min-height: 26px !important; border-radius: 4px !important; }
+  .field span { padding: 3px 7px !important; font-size: 9px !important; }
+
+  .field input,
+  .summary-field input {
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+    min-height: 24px !important;
+  }
+
+  .date-field { max-width: 270px !important; }
+  .section-ribbon { margin: 8px 0 4px 18px !important; padding: 4px 14px !important; font-size: 10px !important; }
+  .table-wrap { overflow: visible !important; border-radius: 5px !important; }
+
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important;
+  }
+
+  thead th { padding: 5px 6px !important; font-size: 9px !important; }
+  tbody td { height: 20px !important; padding: 1px 6px !important; font-size: 9px !important; }
+  .quantity-input { width: 100% !important; padding: 1px 4px !important; font-size: 9px !important; border: 0 !important; background: transparent !important; }
+
+  tfoot th,
+  tfoot td { padding: 5px 6px !important; font-size: 9px !important; }
+
+  .summary-field { grid-template-columns: 175px 1fr !important; margin-top: 5px !important; border-radius: 4px !important; }
+  .summary-field label,
+  .observations label { padding: 4px 7px !important; font-size: 9px !important; }
+  .destination { grid-template-columns: 175px 1fr !important; }
+  .observations { margin-top: 5px !important; border-radius: 4px !important; }
+  .observations textarea { min-height: 30px !important; height: 30px !important; padding: 4px 6px !important; font-size: 9px !important; resize: none !important; }
+  .signatures { width: 82% !important; gap: 10px !important; margin: 9px auto 0 !important; page-break-inside: avoid !important; }
+  .signature-box { border-radius: 4px !important; page-break-inside: avoid !important; }
+  .signature-box h2 { padding: 5px 4px !important; font-size: 9px !important; }
+  .signature-space { height: 48px !important; }
+  .signature-box label { padding: 3px 6px !important; font-size: 9px !important; }
+  .footer-stripe { height: 5px !important; margin: 8px 0 0 !important; }
+
+  input,
+  textarea { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  tr,
+  .signature-box,
+  .summary-field,
+  .observations {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
+
