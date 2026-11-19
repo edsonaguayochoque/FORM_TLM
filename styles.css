@@ -363,6 +363,39 @@ button:hover {
   margin: 15px -30px -20px;
   background: linear-gradient(90deg, var(--green) 0 58%, #26365f 58% 100%);
 }
+
+/* Animación de corazón latiendo */
+.event-placeholder img {
+  animation: latido 1.2s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes latido {
+  0% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.18);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.18);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 620px) {
   body {
     padding: 0;
@@ -428,6 +461,9 @@ button:hover {
     flex-wrap: wrap;
   }
 }
+
+
+
 @page {
   size: letter portrait;
   margin: 8mm;
